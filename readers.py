@@ -20,20 +20,19 @@ def read_json():
     return list
 
 def read_dill():
-    with open('raw/data.dill', 'rb') as f:
+    with open('raw/collie_sentence_bert_filter.dill', "rb") as f:
         data = dill.load(f)
-    
     # 转换为DataFrame并获取目标列
-    content = data['content'].values  # 假设content是目标列名
-    
+    content = pd.DataFrame(data)['example'].values
     # 创建包含内容和标签的list
     list = [content,
-            ['dill_source']*len(content)]
+            ['collie_sentence_bert_filter']*len(content)]
     return list
 
 if __name__ == '__main__':
     res = list(zip(*read_jsonl())) \
         +list(zip(*read_parquet())) \
-        +list(zip(*read_json()))
+        +list(zip(*read_json())) \
+        +list(zip(*read_dill()))
     print(len(res),len(res[0]))
     pd.DataFrame(res).to_csv('csv/problem.csv', index=False, header=['Problem','Source'])
