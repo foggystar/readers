@@ -20,10 +20,10 @@ def read_json():
     return list
 
 def read_dill():
-    with open('raw/collie_sentence_bert_filter.dill', "rb") as f:
+    with open('raw/collie_sentence_bert_filter.dill', 'rb') as f:
         data = dill.load(f)
     # 转换为DataFrame并获取目标列
-    content = pd.DataFrame(data)['example'].values
+    content = pd.DataFrame(data)['prompt'].values
     # 创建包含内容和标签的list
     list = [content,
             ['collie_sentence_bert_filter']*len(content)]
